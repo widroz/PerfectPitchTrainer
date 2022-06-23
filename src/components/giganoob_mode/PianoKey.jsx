@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
 
-export default function PianoKey({note, octave, setIsAudioBussy}) {
+export default function PianoKey({note, octave, setIsAudioBussy, selectAnswer, text}) {
 
     const EXTENSION = ".mp3";
     const [audio, setAudio] = useState(new Audio(""));
   
     const start = () => {
+      if(selectAnswer)selectAnswer(note, octave);
       setIsAudioBussy(true)
+      console.log("Playing note: ", note, octave);
       audio.play()
       audio.onended = function () {
         setIsAudioBussy(false)
+        console.log("Note finished playing");
       }
     }
   
@@ -20,6 +23,6 @@ export default function PianoKey({note, octave, setIsAudioBussy}) {
     }, [note, octave])
 
   return (
-    <button onClick={start}>{note}</button>
+    <button className="piano-key"  onClick={start}>{text}</button>
   )
 }
